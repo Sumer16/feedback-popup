@@ -3,11 +3,9 @@
     import Card from "./UI/Card.svelte";
     import RatingSelect from "./UI/RatingSelect.svelte";
 
-    import { createEventDispatcher } from "svelte";
+    import { FeedbackStore } from "../stores";
 
     import { v4 as uuidv4 } from 'uuid';
-
-    const dispatch = createEventDispatcher();
 
     let text = '';
     let rating = 10;
@@ -35,7 +33,9 @@
                 rating: +rating
             }
 
-            dispatch('add-feedback', newFeedback);
+            FeedbackStore.update((currentFeed) => {
+                return [newFeedback, ...currentFeed]
+            });
 
             text = '';
         }
